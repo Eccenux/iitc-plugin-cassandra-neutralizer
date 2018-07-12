@@ -1,10 +1,10 @@
 ﻿// ==UserScript==
-// @id             iitc-plugin-magnus-builder@eccenux
-// @name           IITC plugin: Magnus builder tracker
+// @id             iitc-plugin-cassandra-neutralizer@eccenux
+// @name           IITC plugin: Cassandra Neutralizer tracker
 // @category       Misc
-// @version        0.1.1
+// @version        0.0.1
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
-// @description    Allow manual entry of deployed, unique resonators. Use the 'highlighter-magnusBuilder' plugin to show the magnusBuilder on the map, and 'sync' to share between multiple browsers or desktop/mobile. It will try and guess which portals you have captured from portal details, but this will not catch every case.
+// @description    [0.0.1] Track your progress for Cassandra Neutralizer badge. This plugin allows marking portals as neutralized. Use the 'sync' plugin to share between multiple browsers or desktop/mobile. Use 'draw tools' plugin to be able to select areas.
 // @include        https://*.ingress.com/intel*
 // @include        http://*.ingress.com/intel*
 // @match          https://*.ingress.com/intel*
