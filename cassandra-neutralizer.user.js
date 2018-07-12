@@ -430,6 +430,8 @@ window.plugin.cassandraNeutralizer.massPortalsUpdate = function(portals) {
 		resetHighlightedPortals();
 	}
 
+	// make sure changes are saved locally (should not be required, but...)
+	plugin.cassandraNeutralizer.storeLocal('cassandraNeutralizer');
 	// save to server
 	plugin.sync.updateMap('cassandraNeutralizer', 'cassandraNeutralizer', portals);
 };
