@@ -2,9 +2,9 @@
 // @id             iitc-plugin-cassandra-neutralizer@eccenux
 // @name           IITC plugin: Cassandra Neutralizer tracker
 // @category       Misc
-// @version        0.0.1
+// @version        0.0.2
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
-// @description    [0.0.1] Track your progress for Cassandra Neutralizer badge. This plugin allows marking portals as neutralized. Use the 'sync' plugin to share between multiple browsers or desktop/mobile. Use 'draw tools' plugin to be able to select areas.
+// @description    [0.0.2] Track your progress for Cassandra Neutralizer badge. This plugin allows marking portals as neutralized. Use the 'sync' plugin to share between multiple browsers or desktop/mobile. Use 'draw tools' plugin to be able to select areas.
 // @include        https://*.ingress.com/intel*
 // @include        http://*.ingress.com/intel*
 // @match          https://*.ingress.com/intel*
