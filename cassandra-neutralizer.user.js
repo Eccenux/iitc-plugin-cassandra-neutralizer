@@ -2,9 +2,9 @@
 // @id             iitc-plugin-cassandra-neutralizer@eccenux
 // @name           IITC plugin: Cassandra Neutralizer tracker
 // @category       Misc
-// @version        0.0.2
+// @version        0.1.0
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
-// @description    [0.0.2] Track your progress for Cassandra Neutralizer badge. This plugin allows marking portals as neutralized. Use the 'sync' plugin to share between multiple browsers or desktop/mobile. Use 'draw tools' plugin to be able to select areas.
+// @description    [0.1.0] Track your progress for Cassandra Neutralizer badge. This plugin allows marking portals as neutralized. Use the 'sync' plugin to share between multiple browsers or desktop/mobile. Use 'draw tools' plugin to be able to select areas.
 // @include        https://*.ingress.com/intel*
 // @include        http://*.ingress.com/intel*
 // @match          https://*.ingress.com/intel*
@@ -478,7 +478,11 @@ window.plugin.cassandraNeutralizer.syncQueue = function() {
 
 //Call after IITC and all plugin loaded
 window.plugin.cassandraNeutralizer.registerFieldForSyncing = function() {
-	if(!window.plugin.sync) return;
+	LOG('registerFieldForSyncing');
+	if(!window.plugin.sync) {
+		LOGwarn('sync. not ready');
+		return;
+	}
 	window.plugin.sync.registerMapForSync('cassandraNeutralizer', 'cassandraNeutralizer', window.plugin.cassandraNeutralizer.syncCallback, window.plugin.cassandraNeutralizer.syncInitialed);
 };
 
@@ -658,7 +662,22 @@ var setup = function() {
 	window.plugin.cassandraNeutralizer.loadLocal('cassandraNeutralizer');
 	window.addPortalHighlighter(window.plugin.cassandraNeutralizer.highlighter.title, window.plugin.cassandraNeutralizer.highlighter);
 	window.addHook('portalDetailsUpdated', window.plugin.cassandraNeutralizer.onPortalDetailsUpdated);
-	window.addHook('iitcLoaded', window.plugin.cassandraNeutralizer.registerFieldForSyncing);
+	// seems like on FF desktop IITC might already be loaded here
+	if (window.iitcLoaded) {
+		LOG('iitc already loaded');
+		window.plugin.cassandraNeutralizer.registerFieldForSyncing();
+	} else {
+		window.addHook('iitcLoaded', function () {
+			LOG('iitcLoaded hook');
+			window.plugin.cassandraNeutralizer.registerFieldForSyncing();
+		});
+	}
+	/*
+	window.addHook('mapDataRefreshEnd', function () {
+		LOG('mapDataRefreshEnd hook');
+		window.plugin.cassandraNeutralizer.registerFieldForSyncing();
+	});
+	*/
 };
 
 //PLUGIN END //////////////////////////////////////////////////////////
