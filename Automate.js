@@ -48,24 +48,24 @@ class Portal {
 		return this.destroyed > 0;
 	}
 
-    /**
-     * Get IITC portal entity.
-     */
+	/**
+	 * Get IITC portal entity.
+	 */
 	getPortalEntity() {
 		return window.portals[this.guid];
 	}
-    /**
-     * Is portal neutral.
-     */
+	/**
+	 * Is portal neutral.
+	 */
 	isNeutral() {
 		let portalEntity = this.getPortalEntity();
 		return portalEntity.options.team == TEAM_NONE;
 	}
-    /**
-     * Entity refresh time.
-     *
-     * This returns a timestamp that is a server side information, so should be accurate.
-     */
+	/**
+	 * Entity refresh time.
+	 *
+	 * This returns a timestamp that is a server side information, so should be accurate.
+	 */
 	entityRefreshTime() {
 		let portalEntity = this.getPortalEntity();
 		return portalEntity.options.timestamp;
@@ -86,20 +86,25 @@ class Portal {
 			return;	// don't know (wait for more log entries)
 		}
 		// => portal.isNeutral
-
 		
 		var portalRefreshTime = portal.entityRefreshTime();
 	
+		// would probably never be true, but have to check
 		if (portalRefreshTime == lastLogTimestamp) {
 			return true;
+		// portal state is newer then the last log entry
+		// => a lot might have happened in between
 		} else if (portalRefreshTime > lastLogTimestamp) {
 			return; // maybe; should refresh log to make sure
+		// portal state is within the boundaries of analyzed log
+		// and as I analized the whole log already and found a resonator destroyed by me
+		// then I guess the portal was neutralized by me...
 		} else { // if (portalRefreshTime < lastLogTimestamp) {
-			// if I destroyed the resonator and then the portal state was neutral then I neutralized the portal
-			if (destroyedResonatorTime < portalRefreshTime) {
-				return NEUTRALIZED_BY_ME;
+			// ...but just to be sure check if portal state is not stale
+			if (portalRefreshTime >= this.destroyed) {
+				return true;
 			} else {
-				return MAYBE, (optionally) check log from portalRefreshTime for any captures on the portal.
+				return; // maybe; should refresh portal state to make sure
 			}
 		}
 	}
