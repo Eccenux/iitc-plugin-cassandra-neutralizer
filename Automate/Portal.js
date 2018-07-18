@@ -1,16 +1,10 @@
 /**
- * Automation helper class(es).
- *
- * Kind of code (some parts might be pseudo code - e.g. `foreach`; some parts might be missing).
+ * Portal from analysis perpective.
  * 
  * Note that "me" means current user.
+ * 
+ * Note! It is assumed this is a non-neutralized portal!
  */
-
- /**
-  * Portal from analysis perpective.
-  * 
-  * Note! It is assumed this is a non-neutralized portal!
-  */
 class Portal {
 	constructor(guid) {
 		this.guid = guid;
