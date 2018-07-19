@@ -12,7 +12,7 @@
 		3: username
 	}
  */
-class LogEntry {
+export default class LogEntry {
 	constructor(value, key) {
 		// basic data
 		/**

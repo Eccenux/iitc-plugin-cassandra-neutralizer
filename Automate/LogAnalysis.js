@@ -1,7 +1,7 @@
 /**
  * Log analysis main class.
  */
-class LogAnalysis {
+export default class LogAnalysis {
 	constructor() {
 		/**
 		 * Neutralized portals guids.
@@ -26,16 +26,27 @@ class LogAnalysis {
 	}
 
 	/**
+	 * Get fake/simplified LatLng object.
+	 * @param {Object} portal Simple portal object.
+	 */
+	getLatLng(portal) {
+		return {
+			lat: portal.options.data.latE6/1E6,
+			lng: portal.options.data.lngE6/1E6,
+		}
+	}
+
+	/**
 	 * Creates a map of position to guid.
 	 * 
 	 * Creates a position key for each portals and returns a map of that key to actual guid.
 	 * 
 	 * Note key format should stay in sync. with `LogEntry` format.
 	 */
-	mapLatLong() {
+	mapLatLong(portals) {
 		let latlngToGuid = {};
-		for(let guid in window.portals) {
-			let latlng = window.portals[guid].getLatLng();
+		for(let guid in portals) {
+			let latlng = this.getLatLng(portals[guid]);
 			let latlngKey = `${latlng.lat};${latlng.lng}`;
 			if (latlngKey in latlngToGuid) {
 				console.warn(`duplicate latlng: ${latlngKey} for portals: ${latlngToGuid[latlngKey]} and ${guid}`);

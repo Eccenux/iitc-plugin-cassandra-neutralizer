@@ -5,7 +5,7 @@
  * 
  * Note! It is assumed this is a non-neutralized portal!
  */
-class Portal {
+export default class Portal {
 	constructor(guid) {
 		this.guid = guid;
 		this.destroyed = -1;	// when was the resonator destroyed
@@ -70,7 +70,7 @@ class Portal {
 	 * 
 	 * Assumes that the portal was not neutralized yet. Must be checked outside!
 	 */
-	stateAnalysis = function (lastLogTimestamp) {
+	stateAnalysis(lastLogTimestamp) {
 		// no resonator was destroyed yet so don't bother checking
 		if (this.destroyed === -1) {
 			return false;
