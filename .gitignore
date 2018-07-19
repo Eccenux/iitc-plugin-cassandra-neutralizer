@@ -1,3 +1,4 @@
 *.lnk
 /Automate/_save
 node_modules
+Automate.html

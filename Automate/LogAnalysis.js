@@ -1,8 +1,11 @@
+import Portal from "./Portal.js";
+import LogEntry from './LogEntry.js';
+
 /**
  * Log analysis main class.
  */
 export default class LogAnalysis {
-	constructor() {
+	constructor(meName, portals, chat) {
 		/**
 		 * Neutralized portals guids.
 		 */
@@ -15,6 +18,15 @@ export default class LogAnalysis {
 		 * Note! Removed after found to be neutralized.
 		 */
 		this.inAnalysis = {};
+
+		/**
+		 * "me"
+		 */
+		this.meName = meName;
+
+		// prepare data
+		this.latlngToGuid = analysis.mapLatLong(portals);
+		this.logEntries = analysis.readLog(chat);
 	}
 
 	/**
@@ -23,6 +35,22 @@ export default class LogAnalysis {
 	 */
 	isNeutrlized(guid) {
 		return this.neutralized.indexOf(guid) >= 0;
+	}
+	/**
+	 * Set as neutralized.
+	 * @param {String} guid Portal id.
+	 */
+	setNeutralized(guid) {
+		console.log('[analysis] portal ${guid} neutralized');
+		// remove from investigation list
+		if (guid in this.inAnalysis) {
+			delete this.inAnalysis[guid];
+		}
+		// remember internally
+		this.neutralized.push(guid);
+
+		// change global neutralization state
+		// ...for now will NOT change the neutralization state in the neutralizer plugin
 	}
 
 	/**
@@ -73,5 +101,55 @@ export default class LogAnalysis {
 		});
 	
 		return logEntries;
-	}	
+	}
+
+	/**
+	 * 
+	 * @param {LogEntry} logEntry 
+	 */
+	analyzeEntry(logEntry) {
+		// skip chitchat entries
+		if (logEntry.guids.length < 1) {
+			return;
+		}
+		
+		// skip entries with portal out of bounds
+		if (!(logEntry.guid in latlngToGuid)) {
+			//console.warn(`unknown portal ${logEntry.guid}; mabe need to zoom in?`)
+			//console.log(logEntry)
+			return;
+		}
+
+		let portalGuid = latlngToGuid[logEntry.guid];
+
+		// skip already found
+		if (analysis.isNeutrlized(portalGuid)) {
+			return;
+		}
+
+		let portal;
+		//let fresh = false;
+		if (portalGuid in this.inAnalysis) {
+			portal = this.inAnalysis[portalGuid];
+		} else {
+			//fresh = true;
+			portal = new Portal(portalGuid);
+			this.inAnalysis[portalGuid] = portal;
+		}
+
+		let myAction = logEntry.username === this.meName;
+
+		// [me] destroyed a Resonator on ...
+		if (logEntry.action === 'resKill' && myAction) {
+			portal.setDestroyedResonator(logEntry.time);
+		// Case destroy>captured
+		} else if (logEntry.action === 'capture') {
+			if (portal.hasDestroyedResonator()) {
+				analysis.setNeutralized(portalGuid);
+			}
+		// Case destroy>not captured
+		} else if (portal.hasDestroyedResonator()) {
+			portal.resetAnalysisState();
+		}
+	}
 }

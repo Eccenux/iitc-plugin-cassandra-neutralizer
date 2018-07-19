@@ -8,6 +8,23 @@ import Portal from './Portal.js';
 //console.log(portals);
 //let portal = new Portal('blah');
 
-let logAnalysis = new LogAnalysis();
-let latlngToGuid = logAnalysis.mapLatLong(portals);
-console.log(latlngToGuid);
+let analysis = new LogAnalysis(PLAYER.nickname, portals, chat);
+
+// test/temp
+let latlngToGuid = analysis.latlngToGuid;
+let logEntries = analysis.logEntries;
+window.logEntries = logEntries;
+
+// test
+function testInfo() {
+	console.log(latlngToGuid);
+	let guid = Object.keys(portals).pop();
+	console.log(guid, portals[guid]);
+	console.log(logEntries);
+}
+testInfo();
+
+for (let i = 0; i < logEntries.length; i++) {
+	const logEntry = logEntries[i];
+	analysis.analyzeEntry(logEntry);
+}
