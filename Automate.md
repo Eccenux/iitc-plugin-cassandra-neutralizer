@@ -125,6 +125,7 @@ TODO
 ### Prototype ###
 
 1. [x] Finish `Portal` class.
+2. [x] Prepare log for analysis.
 2. [ ] Create analysis class prototype that
 	1. For `setNeutralized` would show `console.log('[analysis] portal ${title} neutralized')` (and would NOT change the neutralization state in the neutralizer plugin).
 	2. For `isNeutrlized` would only check internal lists (rather then also check state in the neutralizer plugin). 

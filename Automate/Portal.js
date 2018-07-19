@@ -1,5 +1,5 @@
 /**
- * Portal from analysis perpective.
+ * Portal from analysis perspective.
  * 
  * Note that "me" means current user.
  * 
