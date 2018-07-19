@@ -141,6 +141,7 @@ TODO
 1. [ ] Freeze chat refresh before analysis (if possible). If not then I might just set 
 2. [ ] Add "(beta!)" near the analysis button.
 3. [ ] Re-write `setNeutralized` and `isNeutrlized`.
+4. [ ] Remove `tempText` from `LogEntry`.
 10. [ ] Real world testing. 
 50. [ ] Release?
 100. [ ] New world order! :-)
