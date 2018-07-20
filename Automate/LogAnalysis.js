@@ -25,8 +25,8 @@ export default class LogAnalysis {
 		this.meName = meName;
 
 		// prepare data
-		this.latlngToGuid = analysis.mapLatLong(portals);
-		this.logEntries = analysis.readLog(chat);
+		this.latlngToGuid = this.mapLatLong(portals);
+		this.logEntries = this.readLog(chat);
 	}
 
 	/**
@@ -114,16 +114,16 @@ export default class LogAnalysis {
 		}
 		
 		// skip entries with portal out of bounds
-		if (!(logEntry.guid in latlngToGuid)) {
+		if (!(logEntry.guid in this.latlngToGuid)) {
 			//console.warn(`unknown portal ${logEntry.guid}; mabe need to zoom in?`)
 			//console.log(logEntry)
 			return;
 		}
 
-		let portalGuid = latlngToGuid[logEntry.guid];
+		let portalGuid = this.latlngToGuid[logEntry.guid];
 
 		// skip already found
-		if (analysis.isNeutrlized(portalGuid)) {
+		if (this.isNeutrlized(portalGuid)) {
 			return;
 		}
 
@@ -145,7 +145,7 @@ export default class LogAnalysis {
 		// Case destroy>captured
 		} else if (logEntry.action === 'capture') {
 			if (portal.hasDestroyedResonator()) {
-				analysis.setNeutralized(portalGuid);
+				this.setNeutralized(portalGuid);
 			}
 		// Case destroy>not captured
 		} else if (portal.hasDestroyedResonator()) {

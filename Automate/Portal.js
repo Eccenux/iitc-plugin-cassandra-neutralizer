@@ -76,12 +76,12 @@ export default class Portal {
 			return false;
 		}
 
-		if (!portal.isNeutral()) {
+		if (!this.isNeutral()) {
 			return;	// don't know (wait for more log entries)
 		}
 		// => portal.isNeutral
 		
-		var portalRefreshTime = portal.entityRefreshTime();
+		var portalRefreshTime = this.entityRefreshTime();
 	
 		// would probably never be true, but have to check
 		if (portalRefreshTime == lastLogTimestamp) {

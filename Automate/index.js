@@ -24,7 +24,22 @@ function testInfo() {
 }
 testInfo();
 
+let lastLogTimestamp = 0;
 for (let i = 0; i < logEntries.length; i++) {
 	const logEntry = logEntries[i];
 	analysis.analyzeEntry(logEntry);
+	lastLogTimestamp = logEntry.time;
+}
+
+//lastLogTimestamp = chat._public.newestTimestamp;
+
+// analyze portals that were found in log, but not yet found to be neutralized
+for (const guid in analysis.inAnalysis) {
+	if (analysis.inAnalysis.hasOwnProperty(guid)) {
+		const portal = analysis.inAnalysis[guid];
+		let state = portal.stateAnalysis(lastLogTimestamp);
+		if (state === true) {
+			analysis.setNeutralized(portal.guid);
+		}
+	}
 }
