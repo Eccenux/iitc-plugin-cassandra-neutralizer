@@ -41,7 +41,7 @@ export default class LogAnalysis {
 	 * @param {String} guid Portal id.
 	 */
 	setNeutralized(guid) {
-		console.log('[analysis] portal ${guid} neutralized');
+		console.log(`[analysis] portal ${guid} neutralized`);
 		// remove from investigation list
 		if (guid in this.inAnalysis) {
 			delete this.inAnalysis[guid];

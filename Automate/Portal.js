@@ -71,12 +71,19 @@ export default class Portal {
 	 * Assumes that the portal was not neutralized yet. Must be checked outside!
 	 */
 	stateAnalysis(lastLogTimestamp) {
+		let self = this;
+		function logDebug(text) {
+			console.log(`[stateAnalysis] (${self.guid})`, text)
+		}
+
 		// no resonator was destroyed yet so don't bother checking
 		if (this.destroyed === -1) {
+			// logDebug(`no resonator was destroyed yet so don't bother checking`);
 			return false;
 		}
 
 		if (!this.isNeutral()) {
+			logDebug(`portal is not neutral`);
 			return;	// don't know (wait for more log entries)
 		}
 		// => portal.isNeutral
@@ -85,10 +92,12 @@ export default class Portal {
 	
 		// would probably never be true, but have to check
 		if (portalRefreshTime == lastLogTimestamp) {
+			logDebug(`yes, portal refresh time is the same as log`);
 			return true;
 		// portal state is newer then the last log entry
 		// => a lot might have happened in between
 		} else if (portalRefreshTime > lastLogTimestamp) {
+			logDebug(`maybe; should refresh log to make sure`);
 			return; // maybe; should refresh log to make sure
 		// portal state is within the boundaries of analyzed log
 		// and as I analized the whole log already and found a resonator destroyed by me
@@ -96,8 +105,10 @@ export default class Portal {
 		} else { // if (portalRefreshTime < lastLogTimestamp) {
 			// ...but just to be sure check if portal state is not stale
 			if (portalRefreshTime >= this.destroyed) {
+				logDebug(`yes, portal state is within the boundaries of analyzed log`);
 				return true;
 			} else {
+				logDebug(`maybe; should refresh portal state to make sure`);
 				return; // maybe; should refresh portal state to make sure
 			}
 		}

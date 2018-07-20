@@ -126,12 +126,10 @@ TODO
 
 1. [x] Finish `Portal` class.
 2. [x] Prepare log for analysis.
-2. [ ] Create analysis class prototype that
+2. [x] Create analysis class prototype that
 	1. For `setNeutralized` would show `console.log('[analysis] portal ${title} neutralized')` (and would NOT change the neutralization state in the neutralizer plugin).
 	2. For `isNeutrlized` would only check internal lists (rather then also check state in the neutralizer plugin). 
-2. [ ] Add `console.log` in `stateAnalysis` (especially when returning `undefined`/maybe).
-3. [ ] Setup webpack?
-3. [ ] Write analysis algorithm based on assumption that we analyze the whole log.
+3. [x] Add `console.log` in `stateAnalysis` (especially when returning `undefined`/maybe).
 4. [ ] Write automated tests for some edge cases? 
 5. [ ] Add the whole thing to the plugin, but rather then starting analysis upon log change, add a new button-link in "Casandra Neutralizer" window for manually started analysis. 
 6. [ ] Test if neutralization is logged as expected to JS console.
